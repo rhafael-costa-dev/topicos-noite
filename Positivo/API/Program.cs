@@ -1,26 +1,40 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Namespace;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<AppDataContext>();
+
 var app = builder.Build();
 
-List<Curso> cursos = new List<Curso>() {
-    new Curso(1, "Ciência da Computação "),
-    new Curso(2, "Medicina")
-};
-
-app.MapGet("/", () => {
-    return Results.Ok(cursos);
+// Lista todos os cursos cadastrados
+app.MapGet("/", ([FromServices] AppDataContext ctx) => {
+    if (ctx.Cursos.Any()) {
+        return Results.Ok(ctx.Cursos.ToList());
+    }
+    return Results.NotFound();
 });
 
-app.MapGet("/{id}", ([FromRoute] int id) => {
-    return Results.Ok(cursos.Find(curso => curso.Id == id));
+// Busca o curso pelo identificador
+app.MapGet("/{id}", ([FromRoute] int id,
+                     [FromServices] AppDataContext ctx) => {
+    if (ctx.Cursos.Any()) {
+        return Results.Ok(ctx.Cursos.Include(curso => curso.Id == id));
+    }
+    return Results.NotFound();
 });
 
-app.MapPost("/", ([FromBody] Curso curso) => {
-    cursos.Add(curso);
-    return Results.Ok(curso);
+// cadastrar um novo curso
+app.MapPost("/", ([FromBody] Curso curso,
+                  [FromServices] AppDataContext ctx) => {
+
+    if (ctx.Cursos.Any()) {    
+        ctx.Cursos.Add(curso);
+        ctx.SaveChanges();
+        return Results.Ok(curso);
+    }
+    
+    return Results.NotFound();
 });
 
 
