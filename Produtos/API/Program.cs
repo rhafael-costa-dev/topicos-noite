@@ -32,7 +32,7 @@ app.MapPost("/api/categorias", ([FromBody] Categoria categoria,
 {
     ctx.Categorias.Add(categoria);
     ctx.SaveChanges();
-    return Results.Created("", categoria);
+    return Results.Created("/api/categorias/"+categoria.Id, categoria);
 });
 
 //PUT: /api/produto/alterar/{id}
@@ -90,7 +90,7 @@ app.MapPost("/api/produtos", ([FromBody] Produto produto,
     produto.Categoria = categoria;
     ctx.Produtos.Add(produto);
     ctx.SaveChanges();
-    return Results.Created("", produto);
+    return Results.Created("/api/categorias/"+produto.Id,, produto);
 });
 
 //DELETE: /api/produto/deletar/{id}
