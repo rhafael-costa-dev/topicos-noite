@@ -7,14 +7,6 @@ function App() {
   const [count, setCount] = useState(0);
   const [count1, setCount1] = useState(0);
 
-  function handleClick() {
-    setCount(count + 1);
-  }
-
-  function handleClick1() {
-    setCount1(count1 + 1);
-  }
-
   return (
     <div>
       <Header />
