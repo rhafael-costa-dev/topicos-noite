@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import Footer from './components/footer';
 import Header from './components/Header';
+import ListaProdutos from './pages/produtos/ListaProdutos';
 
 function App() {
 
   const [count, setCount] = useState(0);
   const [count1, setCount1] = useState(0);
 
+
   return (
     <div>
       <Header />
-      <h1>Projeto base em React com TypeScript</h1>
+      <br />
+      <br />
 
-      
-
+      <ListaProdutos />
+    
       <Footer />
     </div>
   );

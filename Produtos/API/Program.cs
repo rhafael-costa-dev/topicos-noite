@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDataContext>();
 
-// builder.Services.AddCors(options =>
-//     options.AddPolicy("Acesso Total",
-//         configs => configs
-//             .AllowAnyOrigin()
-//             .AllowAnyHeader()
-//             .AllowAnyMethod())
-// );
+builder.Services.AddCors(options =>
+    options.AddPolicy("Acesso Total",
+        configs => configs
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod())
+);
 
 var app = builder.Build();
 
@@ -90,7 +90,7 @@ app.MapPost("/api/produtos", ([FromBody] Produto produto,
     produto.Categoria = categoria;
     ctx.Produtos.Add(produto);
     ctx.SaveChanges();
-    return Results.Created("/api/categorias/"+produto.Id,, produto);
+    return Results.Created("/api/categorias/"+produto.Id, produto);
 });
 
 //DELETE: /api/produto/deletar/{id}
@@ -131,6 +131,6 @@ app.MapPut("/api/produtos/{id}", ([FromRoute] string id,
     return Results.Ok(produto);
 });
 
-// app.UseCors("Acesso Total");
+app.UseCors("Acesso Total");
 
 app.Run();
