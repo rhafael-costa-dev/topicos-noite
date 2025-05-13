@@ -24,6 +24,18 @@ function ListaProdutos() {
         });
     }
 
+    function remover(id: string) {
+        axios.delete(`http://localhost:5291/api/produtos/${id}`)
+            .then( () => {
+                carregarDados();
+                alert("Produto removido com sucesso");
+            })
+            .catch ( err => {
+                console.error(err);
+                alert(err);
+            });
+    }
+
     return (
         <div className="teste">
             <h1>Lista de Produtos</h1>
@@ -47,7 +59,9 @@ function ListaProdutos() {
                             <td>{produto.categoria.nome}</td>
                             <td>{new Date(produto.criadoEm).toLocaleDateString('pt-BR')}</td>
                             <td>
-                                <button>Deletar</button>
+                                <button onClick={ ()=> remover(produto.id)}>
+                                    Deletar
+                                </button>
                             </td>
                             <td>
                                 <button>Alterar</button>

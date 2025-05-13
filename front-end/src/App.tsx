@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import Footer from './components/footer';
 import Header from './components/Header';
 import ListaProdutos from './pages/produtos/ListaProdutos';
+import CadastrarProdutos from './pages/produtos/CadastrarProdutos';
 
 function App() {
-
-  const [count, setCount] = useState(0);
-  const [count1, setCount1] = useState(0);
-
 
   return (
     <div>
@@ -15,7 +12,8 @@ function App() {
       <br />
       <br />
 
-      <ListaProdutos />
+      {/* <ListaProdutos /> */}
+      <CadastrarProdutos />
     
       <Footer />
     </div>
